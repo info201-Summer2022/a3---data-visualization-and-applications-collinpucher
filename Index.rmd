@@ -13,6 +13,15 @@ library(scales)
 library(plotly)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
+
+incarceration_trends <- read.csv("incarceration_trends.csv")
+inctrend16 <- filter(incarceration_trends, year == 2016)
+inctrendwa <- filter(incarceration_trends, state == "WA")
+inctrend3 <- filter(inctrendwa, fips == 53033 | fips == 53061 | fips == 53053)
+inctrend3 <- filter(inctrend3, year > 1989 & year < 2017)
+inctrendkingco <- filter(inctrendwa, fips == 53033 & year > 1989 & year < 2017)
+inctrendsnoco <- filter(inctrendwa, fips == 53061)
+inctrendpierceco <- filter(inctrendwa, fips == 53053)
 ```
 
 ## Introduction + Summary Information
@@ -25,9 +34,60 @@ Strictly looking at race and no other factor, in 2016, the mean county incarcera
 
 ## Trends Over Time
 
+```{r echo = FALSE}
+kingco_chart <- ggplot(inctrendkingco, aes(x = year)) + 
+                  geom_line(aes(y = black_prison_pop_rate, color = "Black")) +
+                  geom_line(aes(y = white_prison_pop_rate, color = "White")) +
+                  labs(x = "Year", y = "Incarcerated per 100,000", 
+                       title = "Incarceration by race in King County, WA", 
+                       caption = "Data from the Vera Institute of Justice") +
+                  theme_bw() + theme(legend.position = "right") +
+                  scale_color_manual(name = "Race", values = c("Black" = "blue", 
+                                                               "White" = "darkgreen"))
 
+ggplotly(kingco_chart)
+```
 
+Looking at King County in WA, one can immediately see that black people are incarcerated at a much higher rate than white people, though this disparity has been steadily falling in recent years. I included this chart because I live in King County, and it is a useful indicator of how things have progressed since 1990 (the earliest year where rate data exists).
 
 ## Variable Comparison
 
+```{r echo = FALSE}
+wa_chart <- ggplot(inctrend3, aes(x = year)) +
+              geom_line(aes(y = black_prison_pop_rate, color = county_name)) +
+              labs(x = "Year", y = "Black people incarcerated per 100,000", 
+                   title = "Incarceration by county, WA",
+                   caption = "Data from the Vera Institute of Justice", 
+                   colour = "County") +
+              theme_bw()
+ggplotly(wa_chart)
+```
 
+King County is bordered by Snohomish County to the north and Pierce County to the south. The number of black people incarcerated per 100,000 has differed in some respects in each county and been similar in others. While King County had the largest number from 1990 until 2003, they have fallen steadily below Pierce County since. Pierce County has not reduced their proportion of black people in prison as much as King and Snohomish have since the 2000s.
+
+## Maps
+
+```{r echo = FALSE}
+
+usablackmap2016 <- plot_usmap(data = filter(incarceration_trends, year == 2016), 
+                         values = "black_prison_pop_rate",
+                         regions = "counties", color = "white", 
+                         size = 0) +
+                   scale_fill_continuous(low = "blue", high = "red", 
+                                         name = "Black prison population rate per 100,000", 
+                                         label = scales::comma, limits = c(0, 40000)) 
+
+usawhitemap2016 <- plot_usmap(data = filter(incarceration_trends, year == 2016), 
+                              values = "white_prison_pop_rate",
+                              regions = "counties", color = "white", 
+                              size = 0) +
+                   scale_fill_continuous(low = "blue", high = "red", 
+                                         name = "White prison population rate per 100,000", 
+                                         label = scales::comma, limits = c(0, 40000)) 
+
+ggplotly(usawhitemap2016)
+ggplotly(usablackmap2016)
+
+```
+
+These maps show the racial disparity in incarceration in all counties for which there was data in 2016. It is very clear upon viewing the map that white people are incarcerated at a lower rate across the board in the United States. One can also see particular "hotspots" on the map, like the aforementioned Madison County in North Carolina.
