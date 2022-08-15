@@ -21,7 +21,7 @@ Per the World Prison Brief, the United States currently incarcerates 629 people 
 
 Much of this incarceration goes on at the county level in the US. Using data from the Vera Institute of Justice, I am analyzing the racial disparities of prison populations, specifically among white and black prison population rates per 100,000.
 
-
+Strictly looking at race and no other factor, in 2016, the mean county incarceration rate per 100,000 for black Americans was 2,485.6 (with the median at 2,009.9), while the mean rate for white Americans incarcerated per 100,000 was 601 (with the median at 514.7). The county with the highest rate of black Americans per 100,000 incarcerated (38,461.4) was Madison County, NC, while the county with the highest rate of white Americans per 100,000 incarcerated (4,081.6) was McPherson County, NE.
 
 ## Trends Over Time
 

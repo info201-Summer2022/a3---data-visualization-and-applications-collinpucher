@@ -49,7 +49,11 @@ kingco_chart <- ggplot(inctrendkingco, aes(x = year)) +
 
 # Relational
 wa_chart <- ggplot(inctrend3, aes(x = year)) +
-              geom_line(aes(y = black_prison_pop_rate, color = "county_name"))
+              geom_line(aes(y = black_prison_pop_rate, color = county_name)) +
+              labs(x = "Year", y = "Black people incarcerated per 100,000", 
+                   title = "Incarceration by county, WA",
+                   caption = "Data from the Vera Institute of Justice") +
+              theme_bw()
 
 # Maps
 
