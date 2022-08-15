@@ -1,0 +1,33 @@
+---
+title: "Assignment 3"
+author: "Collin Pucher"
+date: "2022-08-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(patchwork)
+library(usmap)
+library(scales)
+library(plotly)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction + Summary Information
+
+Per the World Prison Brief, the United States currently incarcerates 629 people in prison per 100,000 citizens. This is the highest incarceration rate in the world. 
+
+Much of this incarceration goes on at the county level in the US. Using data from the Vera Institute of Justice, I am analyzing the racial disparities of prison populations, specifically among white and black prison population rates per 100,000.
+
+
+
+## Trends Over Time
+
+
+
+
+## Variable Comparison
+
+
