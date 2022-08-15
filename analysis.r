@@ -7,6 +7,8 @@ library(plotly)
 incarceration_trends <- read.csv("incarceration_trends.csv")
 inctrend16 <- filter(incarceration_trends, year == 2016)
 inctrendwa <- filter(incarceration_trends, state == "WA")
+inctrend3 <- filter(inctrendwa, fips == 53033 | fips == 53061 | fips == 53053)
+inctrend3 <- filter(inctrend3, year > 1989 & year < 2017)
 inctrendkingco <- filter(inctrendwa, fips == 53033 & year > 1989 & year < 2017)
 inctrendsnoco <- filter(inctrendwa, fips == 53061)
 inctrendpierceco <- filter(inctrendwa, fips == 53053)
@@ -44,6 +46,10 @@ kingco_chart <- ggplot(inctrendkingco, aes(x = year)) +
                   theme_bw() + theme(legend.position = "right") +
                   scale_color_manual(name = "Race", values = c("Black" = "blue", 
                                                                "White" = "darkgreen"))
+
+# Relational
+wa_chart <- ggplot(inctrend3, aes(x = year)) +
+              geom_line(aes(y = black_prison_pop_rate, color = "county_name"))
 
 # Maps
 
